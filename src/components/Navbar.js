@@ -15,9 +15,18 @@ export const Navbar = () => {
             </div>
           </Link>
           <nav>
-            <Link to="/">Home</Link>
-            <Link to="/flights">Flights</Link>
-            <Link to="/cart">Cart</Link>
+            <Link to="/">
+              <i class="fa-solid fa-house"></i>
+              <span>Home</span>
+            </Link>
+            <Link to="/flights">
+              <i class="fa-solid fa-plane-departure"></i>
+              <span>Flights</span>
+            </Link>
+            <Link to="/cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Cart</span>
+            </Link>
           </nav>
         </div>
       </div>
