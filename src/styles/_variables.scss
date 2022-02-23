@@ -1,0 +1,271 @@
+$colors: (
+  darkness: #1f2456,
+  dark_blue: #4643d3,
+  medium_blue: #475ddb,
+  dark_gray: #444657,
+  metal: #88929f,
+  gray: #a1acb3,
+  medium: #bdc5ca,
+  light: #ced3d6,
+  lightness: #f2f5f9,
+  shine: #fafafc,
+  red: #ff647c,
+  light_red: #fff2f9,
+  yellow: #ffb800,
+  light_yellow: #fff9de,
+  green: #3bc171,
+  light_green: #ebf9f1,
+  violet: #7b61ff,
+  light_violet: #f2efff,
+  blue: #5e75fb,
+  light_blue: #eef8ff,
+  white: #ffffff,
+  zero: #0b132b,
+);
+
+// primary
+$primary: map-get($colors, 'blue');
+$secondary: map-get($colors, 'zero');
+$white: map-get($colors, 'white');
+
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+$container-max-width-sm: 540px;
+$container-max-width-md: 720px;
+$container-max-width-lg: 960px;
+$container-max-width-xl: 1140px;
+
+$breakpoints: (
+  'sm': $screen-sm-min,
+  'md': $screen-md-min,
+  'lg': $screen-lg-min,
+  'xl': $screen-xl-min,
+);
+
+$container-widths: (
+  'sm': $container-max-width-sm,
+  'md': $container-max-width-md,
+  'lg': $container-max-width-lg,
+  'xl': $container-max-width-xl,
+);
+
+$spacer: 1em !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer * 0.75,
+  4: $spacer * 1.25,
+  5: $spacer * 1.5,
+  6: $spacer * 1.75,
+  7: $spacer * 2.25,
+  8: $spacer * 2.5,
+  9: $spacer * 2.75,
+  10: $spacer * 3.25,
+  11: $spacer * 3.5,
+  12: $spacer * 3.75,
+  13: $spacer * 4.25,
+  14: $spacer * 4.5,
+  15: $spacer * 4.75,
+) !default;
+
+$extras: () !default;
+$extras: map-merge(
+  (
+    'flex': (
+      property: flex,
+      values: (
+        fill: 1 1 auto,
+      ),
+    ),
+    'flex-direction': (
+      property: flex-direction,
+      class: flex,
+      values: row column row-reverse column-reverse,
+    ),
+    'width': (
+      property: width,
+      class: w,
+      values: (
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        auto: auto,
+      ),
+    ),
+    'position': (
+      property: position,
+      values: static relative absolute fixed sticky,
+    ),
+    'justify-content': (
+      class: jc,
+      property: justify-content,
+      values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+      ),
+    ),
+    'align-items': (
+      class: ai,
+      property: align-items,
+      values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        baseline: baseline,
+        stretch: stretch,
+      ),
+    ),
+    'align-content': (
+      class: ac,
+      property: align-content,
+      values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        stretch: stretch,
+      ),
+    ),
+    'align-self': (
+      class: as,
+      property: align-self,
+      values: (
+        auto: auto,
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        baseline: baseline,
+        stretch: stretch,
+      ),
+    ),
+    'display': (
+      property: display,
+      class: d,
+      values: inline inline-block block grid table table-row table-cell flex
+        inline-flex none,
+    ),
+    'padding': (
+      property: padding,
+      class: p,
+      values: $spacers,
+    ),
+    'padding-horizontal': (
+      property: padding-right padding-left,
+      class: ph,
+      values: $spacers,
+    ),
+    'padding-vertical': (
+      property: padding-top padding-bottom,
+      class: pv,
+      values: $spacers,
+    ),
+    'padding-top': (
+      property: padding-top,
+      class: pt,
+      values: $spacers,
+    ),
+    'padding-bottom': (
+      property: padding-bottom,
+      class: pb,
+      values: $spacers,
+    ),
+    'padding-left': (
+      property: padding-left,
+      class: pl,
+      values: $spacers,
+    ),
+    'padding-end': (
+      property: padding-right,
+      class: pr,
+      values: $spacers,
+    ),
+    'margin': (
+      property: margin,
+      class: m,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-horizontal': (
+      property: margin-right margin-left,
+      class: mh,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-vertical': (
+      property: margin-top margin-bottom,
+      class: mv,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-top': (
+      property: margin-top,
+      class: mt,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-right': (
+      property: margin-right,
+      class: mr,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-bottom': (
+      property: margin-bottom,
+      class: mb,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+    'margin-left': (
+      property: margin-left,
+      class: ml,
+      values:
+        map-merge(
+          $spacers,
+          (
+            auto: auto,
+          )
+        ),
+    ),
+  ),
+  $extras
+);

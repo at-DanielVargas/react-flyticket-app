@@ -1,6 +1,6 @@
 .header {
   height: 50px;
-  background-color: rgb(41, 41, 41);
+  background-color: map-get($colors, 'zero');
   display: flex;
   align-items: center;
   .navbar {

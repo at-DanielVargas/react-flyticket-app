@@ -1,0 +1,75 @@
+@mixin breakpoint($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin container() {
+  .container {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @each $breakpoint, $width in $breakpoints {
+    @include breakpoint($breakpoint) {
+      .container {
+        max-width: map-get($container-widths, $breakpoint);
+      }
+    }
+  }
+}
+
+@mixin make-extras($extras, $responsive_infix: '') {
+  @each $k, $p in $extras {
+    $values: map-get($p, values);
+    $cls: map-get($p, class);
+    $properties: map-get($p, property);
+
+    @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
+      $values: zip($values, $values);
+    }
+
+    @if type-of($properties) == 'string' {
+      $properties: append((), $properties);
+    }
+
+    $cls: if(map-has-key($p, class), map-get($p, class), nth($properties, 1));
+    $cls: if($cls == null, '', $cls);
+
+    @each $key, $value in $values {
+      $responsive_infix: if(
+        $cls == '' and str-slice($responsive_infix, 1, 1) == '-',
+        str-slice($responsive_infix, 2),
+        $responsive_infix
+      );
+
+      $property-class-modifier: if(
+        $key,
+        if($cls == '' and $responsive_infix == '', '', '-') + $key,
+        ''
+      );
+
+      @if $key {
+        .#{$cls + $responsive_infix + $property-class-modifier} {
+          @each $property in $properties {
+            #{$property}: $value;
+          }
+        }
+      } @else {
+        .#{$cls + $responsive_infix + $property-class-modifier} {
+          @each $property in $properties {
+            #{$property}: $value;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin color-variant($colors, $class, $props) {
+  @each $key, $color in $colors {
+    .#{str-replace($class, '-#', '-#{$key}')} {
+      #{$props}: $color !important;
+    }
+  }
+}
