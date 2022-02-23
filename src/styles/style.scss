@@ -1,0 +1,54 @@
+@import '~normalize.css/normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+
+
+
+$colors: (
+  darkness: #1F2456,
+  dark_blue: #4643D3,
+  medium_blue: #475DDB,
+  dark_gray: #444657,
+  metal: #88929F,
+  gray: #A1ACB3,
+  medium: #BDC5CA,
+  light: #CED3D6,
+  lightness: #F2F5F9,
+  shine: #FAFAFC,
+  red: #FF647C,
+  light_red: #FFF2F9,
+  yellow: #FFB800,
+  light_yellow: #FFF9DE,
+  green: #3BC171,
+  light_green: #EBF9F1,
+  violet: #7B61FF,
+  light_violet: #F2EFFF,
+  blue: #5E75FB,
+  light_blue: #EEF8FF,
+  white: #FFFFFF,
+  zero: #0B132B
+);
+
+
+// primary
+$primary: map-get($colors, 'blue');
+$secondary: map-get($colors, 'zero');
+$white: map-get($colors, 'white');
+
+
+
+/* globals ------------------------------*/
+html,
+body {
+  font-size: 14px;
+  background-color: map-get($colors, 'shine');
+  color: #424242;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+a {
+  color: red;
+}
+
+/* navbar ------------------------------*/
+@import './navbar';
