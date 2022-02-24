@@ -1,0 +1,77 @@
+.flgt-dropdown {
+  display: inline-flex;
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+
+  .flgt-dropdown-trigger,
+  .flgt-dropdown-trigger button,
+  .flgt-dropdown-trigger input {
+    width: 100%;
+  }
+  .flgt-dropdown-trigger button {
+    justify-content: space-between;
+  }
+
+  &.active .flgt-dropdown-menu,
+  &.hoverable:hover .flgt-dropdown-menu {
+    display: block;
+  }
+  &.right .flgt-dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+
+  &.up .flgt-dropdown-menu {
+    bottom: 100%;
+    padding-bottom: 4px;
+    padding-top: initial;
+    top: auto;
+  }
+  .flgt-dropdown-menu {
+    display: none;
+    left: 0;
+    min-width: 12rem;
+    padding-top: 4px;
+    position: absolute;
+    top: 100%;
+    z-index: 20;
+    .flgt-dropdown-content {
+      background-color: map-get($colors, "lightness");
+      border-radius: $border-radius;
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+
+      &.scrollable {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .flgt-dropdown-item {
+        color: map-get($colors, "zero");
+        display: block;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        padding: 0.375rem 1rem;
+        position: relative;
+        &:hover {
+          background-color: #f5f5f5;
+          color: #0a0a0a;
+        }
+
+        &.active {
+          background-color: map-get($colors, "medium_blue");
+          color: #fff;
+        }
+      }
+
+      .flgt-dropdown-divider {
+        background-color: #ededed;
+        border: none;
+        display: block;
+        height: 1px;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+}

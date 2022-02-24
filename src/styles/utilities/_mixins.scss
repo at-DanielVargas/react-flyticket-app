@@ -19,34 +19,34 @@
   }
 }
 
-@mixin make-extras($extras, $responsive_infix: '') {
+@mixin make-extras($extras, $responsive_infix: "") {
   @each $k, $p in $extras {
     $values: map-get($p, values);
     $cls: map-get($p, class);
     $properties: map-get($p, property);
 
-    @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
+    @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
       $values: zip($values, $values);
     }
 
-    @if type-of($properties) == 'string' {
+    @if type-of($properties) == "string" {
       $properties: append((), $properties);
     }
 
     $cls: if(map-has-key($p, class), map-get($p, class), nth($properties, 1));
-    $cls: if($cls == null, '', $cls);
+    $cls: if($cls == null, "", $cls);
 
     @each $key, $value in $values {
       $responsive_infix: if(
-        $cls == '' and str-slice($responsive_infix, 1, 1) == '-',
+        $cls == "" and str-slice($responsive_infix, 1, 1) == "-",
         str-slice($responsive_infix, 2),
         $responsive_infix
       );
 
       $property-class-modifier: if(
         $key,
-        if($cls == '' and $responsive_infix == '', '', '-') + $key,
-        ''
+        if($cls == "" and $responsive_infix == "", "", "-") + $key,
+        ""
       );
 
       @if $key {
@@ -66,10 +66,79 @@
   }
 }
 
-@mixin color-variant($colors, $class, $props) {
+@mixin color-variants() {
   @each $key, $color in $colors {
-    .#{str-replace($class, '-#', '-#{$key}')} {
-      #{$props}: $color !important;
+    .txt-#{$key} {
+      color: $color;
+    }
+    .bg-#{$key} {
+      background-color: $color;
+    }
+    .border-#{$key} {
+      border-color: $color;
+    }
+  }
+}
+
+@mixin grid() {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(-0.5 * #{$grid-gap});
+    margin-left: calc(-0.5 * #{$grid-gap});
+
+    > * {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 100%;
+      padding-right: calc(#{$grid-gap} * 0.5);
+      padding-left: calc(#{$grid-gap} * 0.5);
+    }
+  }
+
+  .row.no-gutter [class*="col"] {
+    padding: 0;
+  }
+
+  [class*="col"].no-gutter {
+    padding: 0;
+  }
+
+  [class*="col"] {
+    padding: ($grid-gap / 2);
+  }
+
+  .col {
+    flex-shrink: 1;
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  @for $i from 1 through $grid-columns {
+    .col-#{$i} {
+      width: (100% * $i) / $grid-columns;
+    }
+    .col-offset-#{$i} {
+      margin-left: (100% * $i) / $grid-columns;
+    }
+    .col-order-#{$i} {
+      order: #{$i};
+    }
+  }
+
+  @each $breakpoint, $width in $breakpoints {
+    @include breakpoint($breakpoint) {
+      @for $i from 1 through $grid-columns {
+        .col-#{$breakpoint}-#{$i} {
+          width: (100% * $i) / $grid-columns;
+        }
+        .col-#{$breakpoint}-offset-#{$i} {
+          margin-left: (100% * $i) / $grid-columns;
+        }
+        .col-#{$breakpoint}-order-#{$i} {
+          order: #{$i};
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 .header {
   height: 50px;
-  background-color: map-get($colors, 'zero');
+  background-color: map-get($colors, "zero");
   display: flex;
   align-items: center;
   .navbar {
@@ -11,7 +11,7 @@
       display: flex;
       align-items: center;
       text-decoration: none;
-      color: #f4f4f7;
+      color: map-get($colors, "lightness");
       &:hover {
         .icon i:nth-child(1) {
           transform: rotate(-385deg);
@@ -49,10 +49,40 @@
     nav {
       display: flex;
       align-items: center;
+
       a {
-        color: #f4f4f7;
+        color: map-get($colors, "lightness");
         text-decoration: none;
         margin-right: 10px;
+
+        i {
+          width: 18px;
+          height: 18px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+          }
+        }
+
+        span {
+          margin-left: 5px;
+          display: none;
+          @include breakpoint(md) {
+            display: inline-block;
+          }
+        }
         &:last-child {
           margin: 0;
         }

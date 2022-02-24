@@ -21,8 +21,8 @@
 
 @function color-contrast(
   $color,
-  $dark: $dark-text-default,
-  $light: $light-text-default
+  $dark: map-get($colors, 'darkness'),
+  $light: map-get($colors, 'shine')
 ) {
   @if $color == null {
     @return null;

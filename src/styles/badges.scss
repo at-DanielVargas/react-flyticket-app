@@ -1,0 +1,13 @@
+.badge {
+  @extend .button;
+  height: 24px;
+  border: none;
+  padding: inherit;
+
+  @each $key, $color in $colors {
+    &.#{$key} {
+      background-color: $color !important;
+      color: color-contrast($color) !important;
+    }
+  }
+}

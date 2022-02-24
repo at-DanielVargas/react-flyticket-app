@@ -1,23 +1,55 @@
-@import '~normalize.css/normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
-@import './variables';
-@import './utilities/mixins';
+@import "~normalize.css/normalize.css";
+@import "./font.scss";
+@import "./variables";
+@import "./utilities/mixins";
 
 /* globals ------------------------------*/
+
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
 html,
 body {
   font-size: 14px;
   background-color: map-get($colors, 'shine');
-  color: #424242;
-  font-family: 'Noto Sans', sans-serif;
+  color: map-get($colors, 'zero');
+  font-family: "Gilroy", sans-serif;
 }
 
 a {
-  color: red;
+  color: map-get($colors, 'violett');
+  &:hover {
+    color: darken(map-get($colors, 'violett'), 10%);
+  }
 }
 
-/* navbar ------------------------------*/
-@import './navbar';
+/* buttons ------------------------------*/
+@import './buttons';
 
-/* container ------------------------------*/
+/* badges ------------------------------*/
+@import './badges';
+
+/* navbar ------------------------------*/
+@import "./navbar";
+
+/* container \ grid ------------------------------*/
 @include container();
+@include grid();
+
+/* dropdown ------------------------------*/
+@import "./dropdown";
+
+/* form control styles ------------------------------*/
+@import "./forms";
+
+/* calendar ------------------------------*/
+@import "./calendar";
+
+/* helper clases ------------------------------*/
+@include make-extras($extras);
+
+/* color clases ------------------------------*/
+
+@include color-variants();

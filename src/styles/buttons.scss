@@ -1,0 +1,73 @@
+.button,
+button,
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+	height: 32px;
+	border-radius: $border-radius;
+	background-color: map-get($colors, 'light');
+	font-size: 14px;
+	display: inline-flex;
+	border: 1px solid map-get($colors, 'light');
+	line-height: 25px;
+	padding: 0px 15px;
+	align-items: center;
+	justify-content: flex-start;
+	cursor: pointer;
+
+	&.outline {
+		background-color: transparent;
+		&:hover {
+			background-color: transparent;
+			border-color: darken(map-get($colors, 'light'), 10%);
+		}
+
+		&:active {
+			background-color: transparent;
+			border-color: darken(map-get($colors, 'light'), 20%);
+		}
+	}
+
+	&:hover {
+		background-color: darken(map-get($colors, 'light'), 5%);
+	}
+
+	&:active {
+		background-color: darken(map-get($colors, 'light'), 10%);
+	}
+
+
+	@each $key, $color in $colors {
+    &.#{$key} {
+      background-color: $color !important;
+			color: color-contrast($color) !important;
+			&:hover {
+				background-color: darken($color, 10%) !important;
+			}
+
+			&:active {
+				background-color: darken($color, 20%) !important;
+			}
+    }
+
+
+		&.#{$key}-outline {
+			background-color: transparent;
+			border-color: $color;
+			color: $color;
+			&:hover {
+				background-color: transparent;
+				border-color: darken($color, 10%) !important;
+				color: darken($color, 10%) !important;
+			}
+
+			&:active {
+				background-color: transparent;
+				border-color: darken($color, 20%) !important;
+				color: darken($color, 20%) !important;
+			}
+    }
+
+  }
+
+}

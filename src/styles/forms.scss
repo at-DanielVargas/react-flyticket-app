@@ -1,0 +1,20 @@
+.input,
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  outline: none;
+  height: 32px;
+  border: 1px solid map-get($colors, "light");
+  border-radius: $border-radius;
+  padding: 0px 15px;
+
+  &:focus {
+    border-color: map-get($colors, "medium_blue");
+  }
+}

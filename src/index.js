@@ -1,19 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import { Cart, Flights, Home } from './routes';
+import React, { StrictMode } from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { Store } from '@store'
+import { AppRouter } from '@core'
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="" element={<Home />} />
-        <Route path="flights" element={<Flights />} />
-        <Route path="cart" element={<Cart />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+  <StrictMode>
+    <Provider store={Store}>
+      <AppRouter />
+    </Provider>
+  </StrictMode>,
   document.getElementById('root')
-);
+)

@@ -1,3 +1,4 @@
-export * from './Cart';
-export * from './Home';
-export * from './Flights';
+export * from './Cart'
+export * from './Home'
+export * from './Layout'
+export * from './Flights'

@@ -15,18 +15,28 @@ $colors: (
   light_yellow: #fff9de,
   green: #3bc171,
   light_green: #ebf9f1,
-  violet: #7b61ff,
-  light_violet: #f2efff,
+  violett: #7b61ff,
+  light_violett: #f2efff,
   blue: #5e75fb,
   light_blue: #eef8ff,
   white: #ffffff,
   zero: #0b132b,
 );
 
-// primary
-$primary: map-get($colors, 'blue');
+// primary colors
+$primary: map-get($colors, 'bluee');
 $secondary: map-get($colors, 'zero');
 $white: map-get($colors, 'white');
+
+
+$border-radius: 4px;
+
+
+
+$grid-columns: 12;
+$grid-gap: 10px;
+
+
 
 $screen-sm-min: 576px;
 $screen-md-min: 768px;
