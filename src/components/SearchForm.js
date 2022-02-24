@@ -5,10 +5,13 @@ import { FLIGTH_MODES } from 'src/config/constants'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Autocomplete, Datepicker, Dropdown, DropdownItem, Counter } from '@components'
 import { useSelector } from 'react-redux'
-import { CitiesSelectors } from '@store'
+import { CitiesSelectors, FlightsSelectors } from '@store'
 
 export const SearchForm = ({ onSearch }) => {
   const suggestions = useSelector(CitiesSelectors.selectCities)
+  const lastSearch = useSelector(FlightsSelectors.selectLastSearch)
+
+  console.log(lastSearch)
 
   const searchValidationSchema = object().shape({
     mode: string().oneOf([FLIGTH_MODES.ROUNDTRIP, FLIGTH_MODES.ONEWAY]),

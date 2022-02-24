@@ -4,11 +4,13 @@ const initialState = {
   loading: false,
   reservations: [],
   reservation: {
-    extras: [],
+    adults: 0,
+    childrens: 0,
+    infants: 0,
     passengers: [],
     departureFlight: null,
     returnFlight: null,
-    flightMode: ''
+    mode: ''
   },
   error: null
 }
@@ -18,7 +20,9 @@ export const ReservationsReducer = (state = initialState, action) => {
     case ReservationsActionTypes.CLEAR:
       return {
         ...state,
-        ...initialState
+        loading: false,
+        reservation: initialState.reservation,
+        error: null
       }
 
     case ReservationsActionTypes.SET_FLIGHT_MODE:
@@ -26,7 +30,7 @@ export const ReservationsReducer = (state = initialState, action) => {
         ...state,
         reservation: {
           ...state.reservation,
-          flightMode: action.payload
+          mode: action.payload
         }
       }
 

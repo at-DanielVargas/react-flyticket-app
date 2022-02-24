@@ -19,9 +19,9 @@ body {
 }
 
 a {
-  color: map-get($colors, 'violett');
+  color: map-get($colors, 'violet');
   &:hover {
-    color: darken(map-get($colors, 'violett'), 10%);
+    color: darken(map-get($colors, 'violet'), 10%);
   }
 }
 
@@ -33,6 +33,9 @@ a {
 
 /* navbar ------------------------------*/
 @import "./navbar";
+
+/* steps ------------------------------*/
+@import "./steps";
 
 /* container \ grid ------------------------------*/
 @include container();
@@ -49,7 +52,19 @@ a {
 
 /* helper clases ------------------------------*/
 @include make-extras($extras);
+@include responsive-extras($extras);
 
 /* color clases ------------------------------*/
-
 @include color-variants();
+
+
+
+/* animations ------------------------------*/
+@keyframes rotate {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}

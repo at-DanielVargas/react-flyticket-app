@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Navbar } from '@components'
+import { Navbar, Steps } from '@components'
+
 import '../styles/style.scss'
 
 export const Layout = () => {

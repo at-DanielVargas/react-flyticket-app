@@ -19,7 +19,7 @@ export const Navbar = () => {
               <i className='fa-solid fa-house'></i>
               <span>Inicio</span>
             </Link>
-            <Link to='/flights'>
+            <Link to='/reservations'>
               <i className='fa-regular fa-calendar-days'></i>
               <span>Reservas</span>
             </Link>

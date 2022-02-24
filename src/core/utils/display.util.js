@@ -3,12 +3,17 @@ const currency = (amount) =>
 
 const LANG = 'es-ES'
 
-const dateFormat = (dateString) => {
-  const date = new Date(dateString)
+const dateFormat = (dateObject) => {
+  const date = new Date(dateObject)
   const weekday = date.toLocaleDateString(LANG, { weekday: 'short' })
   const month = date.toLocaleDateString(LANG, { month: 'short' })
   const day = date.toLocaleDateString(LANG, { day: '2-digit' })
   return `${weekday}, ${day} ${month}`
+}
+
+const dateFormatToUrl = (dateObject) => {
+  const date = new Date(dateObject)
+  return date.toISOString().split('T')[0]
 }
 
 const timeFormat = (dateString) => {
@@ -70,6 +75,7 @@ const capitalize = (string) => {
 }
 
 export const DisplayUtil = {
+  dateFormatToUrl,
   currency,
   capitalize,
   dateFormat,

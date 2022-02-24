@@ -1,16 +1,12 @@
 import { FlightsService } from '@services'
 import { ReservationActions } from './reservations.actions'
+import { DisplayUtil } from '@utils'
 
 export const FlightsActionTypes = {
   SEARCH_FLIGHTS: '@flights/SEARCH_FLIGHTS',
   SEARCH_FLIGHTS_SUCCESS: '@flights/SEARCH_FLIGHTS_SUCCESS',
   SEARCH_FLIGHTS_FAILURE: '@flights/SEARCH_FLIGHTS_FAILURE',
-
   STORE_SEARCH_QUERY: '@flights/STORE_SEARCH_QUERY',
-
-  SET_DEPARTURE_FLIGHT: '@flights/SET_DEPARTURE_FLIGHT',
-  SET_RETURN_FLIGHT: '@flights/SET_RETURN_FLIGHT',
-
   CLEAR: '@flights/CLEAR'
 }
 
@@ -20,39 +16,18 @@ const clear = () => {
   }
 }
 
-const search = ({
-  departure,
-  arrival,
-  departureDate,
-  returnDate,
-  arrivalDate,
-  passengers,
-  flightType
-}) => {
+const search = ({ departure, arrival, departureDate, returnDate }) => {
   return (dispatch) => {
-    dispatch({
-      type: FlightsActionTypes.SEARCH_FLIGHTS,
-      payload: {
-        departure,
-        arrival,
-        departureDate,
-        arrivalDate,
-        passengers,
-        flightType,
-        returnDate
-      }
+    FlightsService.search({
+      departure: departure.name,
+      arrival: arrival.name,
+      departureDate: DisplayUtil.dateFormatToUrl(departureDate)
     })
-    FlightsService.search({ departure, arrival, departureDate, arrivalDate, passengers })
       .then((response) => {
-        // actualiza la lista de vuelos encontrados
         dispatch({
           type: FlightsActionTypes.SEARCH_FLIGHTS_SUCCESS,
           payload: response.data.flights
         })
-        // guarda el modo de vuelo redondo o simple
-        dispatch(ReservationActions.setFlightMode({ flightMode: flightType }))
-        // guarda los pasajeros seleccionados en la busqueda
-        dispatch(ReservationActions.updatePassengers({ passengers }))
       })
       .catch((error) => {
         dispatch({

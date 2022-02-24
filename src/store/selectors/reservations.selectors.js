@@ -1,7 +1,7 @@
 import { RETURN_KEY, DEPARTURE_KEY } from '@constants'
 
 export const ReservationsSelectors = {
-  selectCurrentReservation: (state) => state.reservations?.reservation,
+  selectReservation: (state) => state.reservations?.reservation,
 
   selectPassengers: (state) => state.reservations?.reservation?.passengers,
 

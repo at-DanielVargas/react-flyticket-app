@@ -19,6 +19,14 @@
   }
 }
 
+@mixin responsive-extras($extras) {
+  @each $breakpoint, $width in $breakpoints {
+    @include breakpoint($breakpoint) {
+      @include make-extras($extras, "-#{$breakpoint}");
+    }
+  }
+}
+
 @mixin make-extras($extras, $responsive_infix: "") {
   @each $k, $p in $extras {
     $values: map-get($p, values);

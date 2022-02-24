@@ -1,0 +1,76 @@
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+	margin: 0;
+
+  .step {
+     position: relative;
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+
+      &.active {
+        .dot {
+           background-color: map-get($colors, 'violet');
+					 color: #fff;
+        }
+
+        .lower-text {
+          color: map-get($colors, 'violet');
+        }
+
+        &:after {
+          background-color: map-get($colors, 'violet');
+        }
+      }
+
+    &:last-child {
+      &:after {
+        width: 50%;
+        transform: translateX(-50%)
+      }
+    }
+
+    &:first-child {
+      &:after {
+        width: 50%;
+        transform: translateX(50%)
+      }
+    }
+
+     &:after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        top: 10px;
+        background-color: map-get($colors, 'light_violett');
+        z-index: 0;
+     }
+
+    .lower-text {
+      font-size: 14px;
+      line-height: 1.57;
+      text-align: center;
+      color: darken(map-get($colors, 'light_violett'), 10%);
+      display: block;
+    }
+
+    .dot {
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+			color: darken(map-get($colors, 'light_violett'), 10%);
+			justify-content: center;
+			align-items: center;
+			width: 20px;
+			height: 20px;
+			font-size: 12px;
+      background-color: map-get($colors, 'light_violett');
+    }
+  }
+}

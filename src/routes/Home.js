@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { SearchForm, TopDestinations, Adventures } from '@components'
-import Undraw from 'react-undraw'
 import { CitiesActions, FlightsActions, FlightsSelectors, ReservationActions } from '@store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Plans } from '@assets'
 
 export const Home = () => {
   const dispatch = useDispatch()
@@ -17,7 +17,8 @@ export const Home = () => {
 
   const handleSearch = (search) => {
     dispatch(FlightsActions.search(search))
-    navigate('/flights')
+    dispatch(ReservationActions.setFlightMode({ mode: search.mode }))
+    navigate('/booking/flights')
   }
 
   return (
@@ -30,14 +31,14 @@ export const Home = () => {
             <SearchForm onSearch={handleSearch} />
           </div>
           <div className='col-12 col-md-5 col-order-1 col-md-order-2'>
-            <Undraw name='world' />
+            <Plans />
           </div>
         </div>
       </div>
 
       <section id='destinations'>
         <div className='container'>
-          <div className='d-flex flex-column ai-center jc-center'>
+          <div className='d-flex flex-column ai-center jc-center txt-sm-left'>
             <h1>Los mejores destinos a un solo click de distancia</h1>
             <TopDestinations />
           </div>

@@ -40,11 +40,11 @@ const clear = () => {
   }
 }
 
-const setFlightMode = ({ flightMode }) => {
+const setFlightMode = ({ mode }) => {
   return (dispatch) => {
     dispatch({
       type: ReservationsActionTypes.SET_FLIGHT_MODE,
-      payload: flightMode
+      payload: mode
     })
   }
 }

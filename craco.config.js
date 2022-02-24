@@ -6,10 +6,11 @@ const aliases = {
   '@constants': './src/config/constants',
   '@env': './src/config/environment',
   '@core': './src/core/index',
+  '@config': './src/config/index',
   '@services': './src/services/index',
   '@store': './src/store/index',
   '@routes': './src/routes/index',
-  '@hooks': './src/hooks/index',
+  '@hooks': './src/core/hooks/index',
   '@assets': './src/assets',
   '@utils': './src/core/utils/index',
   '@assets/*': './src/assets/'
