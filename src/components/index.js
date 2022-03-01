@@ -1,4 +1,5 @@
 export * from './Navbar'
+export * from './Accordion'
 export * from './Adventures'
 export * from './SearchForm'
 export * from './TopDestinations'

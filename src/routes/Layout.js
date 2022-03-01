@@ -1,14 +1,18 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-import { Navbar, Steps } from '@components'
+import PropTypes from 'prop-types'
+import { Navbar } from '@components'
 
 import '../styles/style.scss'
 
-export const Layout = () => {
+export const Layout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      {children}
     </>
   )
+}
+
+Layout.propTypes = {
+  children: PropTypes.node
 }

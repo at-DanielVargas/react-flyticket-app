@@ -14,13 +14,24 @@ const Datepicker = ({ placeholder, ...props }) => {
 
   useClickOutSideDetect(ref, () => setOpen(false))
 
+  const handleMobilePicker = (e) => {
+    const nativeDate = e.target.value.split('-').map((fr) => parseInt(fr))
+    const date = new Date(nativeDate[0], nativeDate[1] - 1, nativeDate[2])
+    helpers.setValue(date)
+    inputRef.current.value = DisplayUtil.capitalize(DisplayUtil.dateFormat(date))
+  }
+
   const onDateSelect = (date) => {
+    if (date.getTime() < new Date().getTime()) {
+      return
+    }
     helpers.setValue(date)
     inputRef.current.value = DisplayUtil.capitalize(DisplayUtil.dateFormat(date))
   }
 
   return (
     <div className={`flgt-dropdown ${isOpen && 'active'}`} ref={ref}>
+      <input className='mobile-picker' type='date' onChange={handleMobilePicker} />
       <input
         className='flgt-dropdown-trigger'
         onFocus={() => setOpen(true)}

@@ -1,5 +1,6 @@
 import { ReservationsService } from '@services'
-import { FlightsActions } from '@store'
+import { CartActions } from '@store'
+import { FLIGTH_MODES } from 'src/config/constants'
 
 export const ReservationsActionTypes = {
   GET_RESERVATIONS: '@reservations/GET_RESERVATIONS',
@@ -22,140 +23,143 @@ export const ReservationsActionTypes = {
   DELETE_SUCCESS: '@reservations/DELETE_SUCCESS',
   DELETE_FAILURE: '@reservations/DELETE_FAILURE',
 
-  CREATE_LOCAL: '@reservations/CREATE_LOCAL',
-  READ_LOCAL: '@reservations/READ_LOCAL',
-  UPDATE_LOCAL: '@reservations/UPDATE_LOCAL',
-  DELETE_LOCAL: '@reservations/DELETE_LOCAL',
-
-  SELECT_FLIGHT: '@reservations/SELECT_FLIGHT',
-  UPDATE_PASSENGERS: '@reservations/UPDATE_PASSENGERS',
+  //#region reservation flow
+  SET_PASSENGERS: '@reservations/SET_PASSENGERS',
   SET_FLIGHT_MODE: '@reservations/SET_FLIGHT_MODE',
+  SET_DEPARTURE_CITY: '@reservations/SET_DEPARTURE_CITY',
+  SET_ARRIVAL_CITY: '@reservations/SET_ARRIVAL_CITY',
+  ADD_FLIGHT: '@reservations/ADD_FLIGHT',
+  //#endregion
 
   CLEAR: '@reservations/CLEAR'
 }
 
-const clear = () => {
-  return {
-    type: ReservationsActionTypes.CLEAR
-  }
-}
-
-const setFlightMode = ({ mode }) => {
-  return (dispatch) => {
-    dispatch({
-      type: ReservationsActionTypes.SET_FLIGHT_MODE,
-      payload: mode
-    })
-  }
-}
-
-const setFlight = ({ flight, type }) => {
-  // type: 'departure' or 'return'
-  return (dispatch, state) => {
-    const { flights } = state()
-    if (flights.query.flightType === 'roundtrip') {
-      const {
-        returnDate: departureDate,
-        arrival: departure,
-        departure: arrival,
-        passengers,
-        flightType
-      } = flights.query
-      dispatch(FlightsActions.search({ departure, arrival, departureDate, passengers, flightType }))
-    }
-    dispatch({
-      type: ReservationsActionTypes.SELECT_FLIGHT,
-      payload: { flight, type }
-    })
-  }
-}
-
-const create = ({ reservation }) => {
-  return (dispatch) => {
-    dispatch({
-      type: ReservationsActionTypes.CREATE
-    })
-    ReservationsService.create({ reservation })
-      .then((response) => {
-        dispatch({
-          type: ReservationsActionTypes.CREATE_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: ReservationsActionTypes.CREATE_FAILURE,
-          payload: error
-        })
-      })
-  }
-}
-
-const read = () => {
-  return async (dispatch) => {
-    dispatch({
-      type: ReservationsActionTypes.READ
-    })
-    ReservationsService.read()
-      .then((response) => {
-        dispatch({
-          type: ReservationsActionTypes.READ_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: ReservationsActionTypes.READ_FAILURE,
-          payload: error
-        })
-      })
-  }
-}
-
-const update = ({ reservation }) => {
-  return (dispatch) => {
-    dispatch({ type: ReservationsActionTypes.UPDATE })
-    ReservationsService.update({ reservation })
-      .then((response) => {
-        dispatch({
-          type: ReservationsActionTypes.UPDATE_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: ReservationsActionTypes.UPDATE_FAILURE,
-          payload: error
-        })
-      })
-  }
-}
-
-const del = ({ reservation }) => {
-  return (dispatch) => {
-    dispatch({ type: ReservationsActionTypes.DELETE })
-    ReservationsService._delete({ reservation })
-      .then((response) => {
-        dispatch({
-          type: ReservationsActionTypes.DELETE_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: ReservationsActionTypes.DELETE_FAILURE,
-          payload: error
-        })
-      })
-  }
-}
-
 export const ReservationActions = {
-  create,
-  read,
-  update,
-  del,
-  setFlight,
-  setFlightMode,
-  clear
+  clear: () => {
+    return {
+      type: ReservationsActionTypes.CLEAR
+    }
+  },
+  setFlightMode: ({ mode }) => {
+    return (dispatch) => {
+      dispatch({
+        type: ReservationsActionTypes.SET_FLIGHT_MODE,
+        payload: mode
+      })
+    }
+  },
+  setPassengers: (passengers) => {
+    return (dispatch) => {
+      dispatch({
+        type: ReservationsActionTypes.SET_PASSENGERS,
+        payload: passengers
+      })
+    }
+  },
+  addFlight: ({ flight }) => {
+    return (dispatch) => {
+      dispatch(CartActions.addToCart({ item: flight }))
+      dispatch({
+        type: ReservationsActionTypes.ADD_FLIGHT,
+        payload: flight
+      })
+    }
+  },
+  setDepartureCity: ({ city }) => {
+    return (dispatch) => {
+      dispatch({
+        type: ReservationsActionTypes.SET_DEPARTURE_CITY,
+        payload: city
+      })
+    }
+  },
+  setArrivalCity: ({ city }) => {
+    return (dispatch) => {
+      dispatch({
+        type: ReservationsActionTypes.SET_ARRIVAL_CITY,
+        payload: city
+      })
+    }
+  },
+
+  // async actions (thunks)
+  create: () => {
+    return (dispatch, state) => {
+      const reservation = state().reservations.reservation
+      dispatch({
+        type: ReservationsActionTypes.CREATE
+      })
+      ReservationsService.create({ reservation })
+        .then((response) => {
+          dispatch({
+            type: ReservationsActionTypes.CREATE_SUCCESS,
+            payload: response.data
+          })
+        })
+        .catch((error) => {
+          console.log(error.response)
+
+          dispatch({
+            type: ReservationsActionTypes.CREATE_FAILURE,
+            payload: error
+          })
+        })
+    }
+  },
+  read: () => {
+    return async (dispatch) => {
+      dispatch({
+        type: ReservationsActionTypes.READ
+      })
+      ReservationsService.read()
+        .then((response) => {
+          dispatch({
+            type: ReservationsActionTypes.READ_SUCCESS,
+            payload: response.data
+          })
+        })
+        .catch((error) => {
+          dispatch({
+            type: ReservationsActionTypes.READ_FAILURE,
+            payload: error
+          })
+        })
+    }
+  },
+  update: ({ reservation }) => {
+    return (dispatch) => {
+      dispatch({ type: ReservationsActionTypes.UPDATE })
+      ReservationsService.update({ reservation })
+        .then((response) => {
+          dispatch({
+            type: ReservationsActionTypes.UPDATE_SUCCESS,
+            payload: response.data
+          })
+        })
+        .catch((error) => {
+          dispatch({
+            type: ReservationsActionTypes.UPDATE_FAILURE,
+            payload: error
+          })
+        })
+    }
+  },
+  delete: ({ reservation }) => {
+    return (dispatch) => {
+      dispatch({ type: ReservationsActionTypes.DELETE })
+      ReservationsService._delete({ reservation })
+        .then((response) => {
+          dispatch({
+            type: ReservationsActionTypes.DELETE_SUCCESS,
+            payload: response.data
+          })
+        })
+        .catch((error) => {
+          dispatch({
+            type: ReservationsActionTypes.DELETE_FAILURE,
+            payload: error
+          })
+        })
+    }
+  }
 }

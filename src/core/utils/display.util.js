@@ -12,6 +12,9 @@ const dateFormat = (dateObject) => {
 }
 
 const dateFormatToUrl = (dateObject) => {
+  if (dateObject instanceof Date) {
+    return dateObject.toISOString().split('T')[0]
+  }
   const date = new Date(dateObject)
   return date.toISOString().split('T')[0]
 }

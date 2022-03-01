@@ -51,7 +51,7 @@ const index = () => {
       .catch((error) => {
         dispatch({
           type: CitiesActionTypes.INDEX_CITIES_FAILURE,
-          payload: error.response.data
+          payload: error
         })
       })
   }

@@ -7,7 +7,6 @@ const login = ({ email, password }) => {
 const register = ({ user }) => {
   return RestService.post('/register', { user })
 }
-
 export const AuthService = {
   login,
   register

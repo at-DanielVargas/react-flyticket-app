@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router'
 import { AuthService } from '@services'
 
 export const AuthActionTypes = {
@@ -10,45 +11,48 @@ export const AuthActionTypes = {
   REGISTER_FAILURE: '@auth/REGISTER_FAILURE'
 }
 
-const login = ({ email, password }) => {
-  return async (dispatch) => {
-    dispatch({ type: AuthActionTypes.LOGIN_REQUEST })
-    AuthService.login({ email, password })
-      .then((response) => {
-        dispatch({
-          type: AuthActionTypes.LOGIN_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: AuthActionTypes.LOGIN_FAILURE,
-          payload: error.response.data
-        })
-      })
-  }
-}
-
-const register = ({ user }) => {
-  return async (dispatch) => {
-    dispatch({ type: AuthActionTypes.REGISTER_REQUEST })
-    AuthService.register({ user })
-      .then((response) => {
-        dispatch({
-          type: AuthActionTypes.REGISTER_SUCCESS,
-          payload: response.data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: AuthActionTypes.REGISTER_FAILURE,
-          payload: error
-        })
-      })
-  }
-}
-
 export const AuthActions = {
-  login,
-  register
+  login: ({ email, password }) => {
+    return (dispatch) => {
+      dispatch({ type: AuthActionTypes.LOGIN_REQUEST })
+      AuthService.login({ email, password })
+        .then((response) => {
+          dispatch({
+            type: AuthActionTypes.LOGIN_SUCCESS,
+            payload: response.data
+          })
+          dispatch(push('/'))
+        })
+        .catch((error) => {
+          dispatch({
+            type: AuthActionTypes.LOGIN_FAILURE,
+            payload: error
+          })
+        })
+    }
+  },
+
+  register: ({ user }) => {
+    return (dispatch) => {
+      dispatch({ type: AuthActionTypes.REGISTER_REQUEST })
+      AuthService.register({ user })
+        .then((response) => {
+          dispatch({
+            type: AuthActionTypes.REGISTER_SUCCESS,
+            payload: response.data
+          })
+        })
+        .catch((error) => {
+          dispatch({
+            type: AuthActionTypes.REGISTER_FAILURE,
+            payload: error
+          })
+        })
+    }
+  },
+  logout: () => {
+    return {
+      type: AuthActionTypes.LOGOUT
+    }
+  }
 }

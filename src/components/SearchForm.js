@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { object, string, array, date, number } from 'yup'
-import { FLIGTH_MODES } from 'src/config/constants'
+import { FLIGTH_MODES, PASSENGER_TYPES } from 'src/config/constants'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Autocomplete, Datepicker, Dropdown, DropdownItem, Counter } from '@components'
 import { useSelector } from 'react-redux'
@@ -10,8 +10,6 @@ import { CitiesSelectors, FlightsSelectors } from '@store'
 export const SearchForm = ({ onSearch }) => {
   const suggestions = useSelector(CitiesSelectors.selectCities)
   const lastSearch = useSelector(FlightsSelectors.selectLastSearch)
-
-  console.log(lastSearch)
 
   const searchValidationSchema = object().shape({
     mode: string().oneOf([FLIGTH_MODES.ROUNDTRIP, FLIGTH_MODES.ONEWAY]),
@@ -22,8 +20,22 @@ export const SearchForm = ({ onSearch }) => {
       is: FLIGTH_MODES.ROUNDTRIP,
       then: date().required('Este campo es obligatorio'),
       otherwise: date().notRequired()
-    })
+    }),
+    passengers: array()
+      .of(object())
+      .min(1, 'Debes seleccionar por lo menos 1 pasajero')
+      .required('Este campo es obligatorio')
   })
+
+  const handlePassengersCount = (value, fieldName, setValues, values) => {
+    if (value > 0) {
+      const passengers = [...values.passengers].filter((passenger) => passenger.type !== fieldName)
+      for (let index = 0; index < value; index++) {
+        passengers.push({ type: fieldName, firstname: '', lastname: '', email: '', phone: '' })
+      }
+      setValues({ ...values, passengers })
+    }
+  }
 
   return (
     <div className='search-form'>
@@ -34,91 +46,118 @@ export const SearchForm = ({ onSearch }) => {
           departureDate: '',
           returnDate: '',
           mode: FLIGTH_MODES.ONEWAY,
-          adults: 0,
-          childrens: 0,
-          infants: 0
+          passengers: []
         }}
         validationSchema={searchValidationSchema}
         onSubmit={(values) => {
           onSearch(values)
         }}>
-        <Form>
-          <div className='row'>
-            <div className='col-3'>
-              <label className='check radio'>
-                Sencillo
-                <Field type='radio' name='mode' value={FLIGTH_MODES.ONEWAY} />
-                <div className='indicator'></div>
-              </label>
+        {({ errors, values, touched, setValues }) => (
+          <Form>
+            <div className='row'>
+              <div className='col-3'>
+                <label className='check radio'>
+                  Sencillo
+                  <Field type='radio' name='mode' value={FLIGTH_MODES.ONEWAY} />
+                  <div className='indicator'></div>
+                </label>
+              </div>
+              <div className='col-3'>
+                <label className='check radio'>
+                  Redondo
+                  <Field type='radio' name='mode' value={FLIGTH_MODES.ROUNDTRIP} />
+                  <div className='indicator'></div>
+                </label>
+              </div>
             </div>
-            <div className='col-3'>
-              <label className='check radio'>
-                Redondo
-                <Field type='radio' name='mode' value={FLIGTH_MODES.ROUNDTRIP} />
-                <div className='indicator'></div>
-              </label>
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-12 col-md-6'>
-              <Autocomplete name='departure' placeholder='Origen' suggestions={suggestions} />
-              <ErrorMessage name='departure' component='div' className='txt-red ph-2' />
-            </div>
-            <div className='col-12 col-md-6'>
-              <Autocomplete name='arrival' placeholder='Destino' suggestions={suggestions} />
-              <ErrorMessage name='arrival' component='div' className='txt-red ph-2' />
-            </div>
-            <div className='col-12 col-md-3'>
-              <Datepicker name='departureDate' placeholder='fecha de salida' />
-              <ErrorMessage name='departureDate' component='div' className='txt-red ph-2' />
-            </div>
-            <div className='col-12 col-md-3'>
-              <Datepicker name='returnDate' placeholder='fecha de regreso' />
-              <ErrorMessage name='returnDate' component='div' className='txt-red ph-2' />
-            </div>
-            <div className='col-12 col-md-3'>
-              <Dropdown placeholder='Pasajeros'>
-                <DropdownItem>
-                  <div className='counter-container'>
-                    <div className='counter-info'>
-                      <b>Adultos</b>
+            <div className='row'>
+              <div className='col-12 col-md-6'>
+                <Autocomplete name='departure' placeholder='Origen' suggestions={suggestions} />
+                <ErrorMessage name='departure' component='div' className='txt-red ph-2' />
+              </div>
+              <div className='col-12 col-md-6'>
+                <Autocomplete name='arrival' placeholder='Destino' suggestions={suggestions} />
+                <ErrorMessage name='arrival' component='div' className='txt-red ph-2' />
+              </div>
+              <div
+                className={`col-12 ${
+                  values.mode === FLIGTH_MODES.ONEWAY ? 'col-md-4' : 'col-md-3'
+                }`}>
+                <Datepicker name='departureDate' placeholder='Salida' />
+                <ErrorMessage name='departureDate' component='div' className='txt-red ph-2' />
+              </div>
+              {values.mode === FLIGTH_MODES.ROUNDTRIP && (
+                <div
+                  className={`col-12 ${
+                    values.mode === FLIGTH_MODES.ONEWAY ? 'col-md-4' : 'col-md-3'
+                  }`}>
+                  <Datepicker name='returnDate' placeholder='Regreso' />
+                  <ErrorMessage name='returnDate' component='div' className='txt-red ph-2' />
+                </div>
+              )}
+              <div
+                className={`col-12 ${
+                  values.mode === FLIGTH_MODES.ONEWAY ? 'col-md-4' : 'col-md-3'
+                }`}>
+                <Dropdown placeholder='Pasajeros'>
+                  <DropdownItem>
+                    <div className='counter-container'>
+                      <div className='counter-info'>
+                        <b>Adultos</b>
+                      </div>
+                      <div className='counter-count'>
+                        <Counter
+                          onCounterChange={(count) =>
+                            handlePassengersCount(count, PASSENGER_TYPES.ADULT, setValues, values)
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className='counter-count'>
-                      <Counter name='adults' />
-                    </div>
-                  </div>
-                </DropdownItem>
+                  </DropdownItem>
 
-                <DropdownItem>
-                  <div className='counter-container'>
-                    <div className='counter-info'>
-                      <b>Niños</b>
+                  <DropdownItem>
+                    <div className='counter-container'>
+                      <div className='counter-info'>
+                        <b>Niños</b>
+                      </div>
+                      <div className='counter-count'>
+                        <Counter
+                          onCounterChange={(count) =>
+                            handlePassengersCount(count, PASSENGER_TYPES.CHILD, setValues, values)
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className='counter-count'>
-                      <Counter name='childrens' />
-                    </div>
-                  </div>
-                </DropdownItem>
+                  </DropdownItem>
 
-                <DropdownItem>
-                  <div className='counter-container'>
-                    <div className='counter-info'>
-                      <b>Infantes</b>
+                  <DropdownItem>
+                    <div className='counter-container'>
+                      <div className='counter-info'>
+                        <b>Infantes</b>
+                      </div>
+                      <div className='counter-count'>
+                        <Counter
+                          onCounterChange={(count) =>
+                            handlePassengersCount(count, PASSENGER_TYPES.INFANT, setValues, values)
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className='counter-count'>
-                      <Counter name='infants' />
-                    </div>
-                  </div>
-                </DropdownItem>
-              </Dropdown>
+                  </DropdownItem>
+                </Dropdown>
+                <ErrorMessage name='passengers' component='div' className='txt-red ph-2' />
+              </div>
+              <div
+                className={`col-12 ${
+                  values.mode === FLIGTH_MODES.ONEWAY ? 'col-md-4' : 'col-md-3'
+                }`}>
+                <button className='blue-outline block' type='submit'>
+                  Buscar
+                </button>
+              </div>
             </div>
-            <div className='col-12 col-md-3'>
-              <button className='blue-outline' type='submit'>
-                Buscar
-              </button>
-            </div>
-          </div>
-        </Form>
+          </Form>
+        )}
       </Formik>
     </div>
   )

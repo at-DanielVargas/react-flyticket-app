@@ -17,4 +17,9 @@ select {
   &:focus {
     border-color: map-get($colors, "medium_blue");
   }
+
+  &.block {
+    display: block;
+    width: 100%;
+  }
 }

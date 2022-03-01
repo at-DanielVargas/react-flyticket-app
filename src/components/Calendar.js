@@ -51,10 +51,11 @@ const Calendar = ({ onDateSelect, className = '', reservations = [] }) => {
     }
   }
 
-  // setea las clases de los dias
   const setClasses = (data) => {
     if (data.getMonth() !== state.month) {
       return 'day outday'
+    } else if (data.getTime() < new Date().getTime()) {
+      return 'day disabled'
     } else if (data.getDate() === state.date) {
       return 'day active'
     } else if (
@@ -67,7 +68,6 @@ const Calendar = ({ onDateSelect, className = '', reservations = [] }) => {
     return 'day'
   }
 
-  // al dar click en el año se activa el input para cambiar el año
   const changeYear = () => {
     setState({
       ...state,

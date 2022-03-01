@@ -1,26 +1,26 @@
 $colors: (
-  darkness: #1f2456,
-  dark_blue: #4643d3,
-  medium_blue: #475ddb,
-  dark_gray: #444657,
-  metal: #88929f,
-  gray: #a1acb3,
-  medium: #bdc5ca,
-  light: #ced3d6,
-  lightness: #f2f5f9,
-  shine: #fafafc,
-  red: #ff647c,
-  light_red: #fff2f9,
-  yellow: #ffb800,
-  light_yellow: #fff9de,
-  green: #3bc171,
-  light_green: #ebf9f1,
+  "darkness": #1f2456,
+  "dark_blue": #4643d3,
+  "medium_blue": #475ddb,
+  "dark_gray": #444657,
+  "metal": #88929f,
+  "gray": #a1acb3,
+  "medium": #bdc5ca,
+  "light": #ced3d6,
+  "lightness": #f2f5f9,
+  "shine": #fafafc,
+  "red": #ff647c,
+  "light_red": #fff2f9,
+  "yellow": #ffb800,
+  "light_yellow": #fff9de,
+  "green": #3bc171,
+  "light_green": #ebf9f1,
   "violet": #7b61ff,
-  light_violett: #f2efff,
+  "light_violet": #f2efff,
   "blue": #5e75fb,
-  light_blue: #eef8ff,
+  "light_blue": #eef8ff,
   "white": #ffffff,
-  zero: #0b132b,
+  "zero": #0b132b,
 );
 
 // primary colors
@@ -30,6 +30,8 @@ $white: map-get($colors, 'white');
 
 
 $border-radius: 4px;
+$border-width: 1px;
+$border-style: solid;
 
 
 

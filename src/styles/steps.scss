@@ -4,6 +4,7 @@
   flex-direction: row;
   padding: 10px 0;
 	margin: 0;
+  background-color: $white;
 
   .step {
      position: relative;
@@ -15,7 +16,7 @@
       &.active {
         .dot {
            background-color: map-get($colors, 'violet');
-					 color: #fff;
+					 color: $white;
         }
 
         .lower-text {
@@ -47,7 +48,7 @@
         height: 1px;
         position: absolute;
         top: 10px;
-        background-color: map-get($colors, 'light_violett');
+        background-color: map-get($colors, 'light_violet');
         z-index: 0;
      }
 
@@ -55,7 +56,7 @@
       font-size: 14px;
       line-height: 1.57;
       text-align: center;
-      color: darken(map-get($colors, 'light_violett'), 10%);
+      color: darken(map-get($colors, 'light_violet'), 10%);
       display: block;
     }
 
@@ -64,13 +65,13 @@
       position: relative;
       z-index: 1;
       display: inline-flex;
-			color: darken(map-get($colors, 'light_violett'), 10%);
+			color: darken(map-get($colors, 'light_violet'), 10%);
 			justify-content: center;
 			align-items: center;
 			width: 20px;
 			height: 20px;
 			font-size: 12px;
-      background-color: map-get($colors, 'light_violett');
+      background-color: map-get($colors, 'light_violet');
     }
   }
 }

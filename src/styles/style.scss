@@ -37,6 +37,9 @@ a {
 /* steps ------------------------------*/
 @import "./steps";
 
+/* flights ------------------------------*/
+@import "./flightslist";
+
 /* container \ grid ------------------------------*/
 @include container();
 @include grid();
@@ -57,14 +60,8 @@ a {
 /* color clases ------------------------------*/
 @include color-variants();
 
+/* accordion ------------------------------*/
+@import './accordion';
 
-
-/* animations ------------------------------*/
-@keyframes rotate {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
-}
+/* auth ------------------------------*/
+@import './auth';

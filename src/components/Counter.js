@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { PropTypes } from 'prop-types'
 import { useField } from 'formik'
 
-const Counter = ({ onChange, ...props }) => {
+const Counter = ({ onCounterChange, ...props }) => {
   const [field, meta, helpers] = useField(props)
   const [count, setCount] = useState(0)
   const ref = useRef()
 
   useEffect(() => {
-    if (onChange) {
-      onChange(count)
+    if (onCounterChange) {
+      onCounterChange(count)
     }
     ref.current.value = count
     helpers.setValue(count)
@@ -30,7 +30,7 @@ const Counter = ({ onChange, ...props }) => {
       <button className='button-sm mr-3' type='button' onClick={decrement}>
         <i className='fa-solid fa-minus'></i>
       </button>
-      <input className='input-sm' type='text' ref={ref} />
+      <input className='w-100' type='text' ref={ref} />
       <button className='button-sm ml-3' type='button' onClick={increment}>
         <i className='fa-solid fa-plus'></i>
       </button>
@@ -39,7 +39,7 @@ const Counter = ({ onChange, ...props }) => {
 }
 
 Counter.propTypes = {
-  onChange: PropTypes.func
+  onCounterChange: PropTypes.func
 }
 
 export { Counter }

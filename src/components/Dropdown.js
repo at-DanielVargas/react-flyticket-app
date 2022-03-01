@@ -54,6 +54,11 @@ export const Dropdown = ({ children, placeholder, color, className = '', ...prop
               key: index
             })
           })}
+          <div className='flgt-dropdown-item mt-auto'>
+            <button className='block violet-outline' type='button' onClick={() => setIsOpen(false)}>
+              Cerrar
+            </button>
+          </div>
         </div>
       </div>
     </div>

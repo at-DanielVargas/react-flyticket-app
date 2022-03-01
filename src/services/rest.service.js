@@ -10,7 +10,7 @@ export const RestService = axios.create({
 
 RestService.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem(USER_ACCESS_TOKEN)
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }

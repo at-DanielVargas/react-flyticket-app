@@ -3,7 +3,6 @@ import { NETWORK_STATUS } from '@constants'
 const initialState = {
   items: [],
   networkStatus: NETWORK_STATUS.IDLE,
-  suggestions: [],
   loading: false,
   error: null
 }

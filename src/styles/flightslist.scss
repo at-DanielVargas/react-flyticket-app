@@ -1,0 +1,13 @@
+.flights-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+
+    .flights-item {
+        border-width: 1px;
+        border-style: solid;
+        border-radius: $border-radius;
+        padding: 0;
+    }
+}

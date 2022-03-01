@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { SearchForm, TopDestinations, Adventures } from '@components'
 import { CitiesActions, FlightsActions, FlightsSelectors, ReservationActions } from '@store'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Plans } from '@assets'
 
 export const Home = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const history = useHistory()
   const searchNetworkState = useSelector(FlightsSelectors.selectSearchLoadingState)
 
   useEffect(() => {
@@ -17,8 +17,11 @@ export const Home = () => {
 
   const handleSearch = (search) => {
     dispatch(FlightsActions.search(search))
+    dispatch(ReservationActions.setPassengers(search.passengers))
+    dispatch(ReservationActions.setDepartureCity(search.departure))
+    dispatch(ReservationActions.setArrivalCity(search.arrival))
     dispatch(ReservationActions.setFlightMode({ mode: search.mode }))
-    navigate('/booking/flights')
+    history.push('/booking/flights')
   }
 
   return (

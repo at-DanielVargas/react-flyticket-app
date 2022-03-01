@@ -1,13 +1,13 @@
 import { ReservationsActionTypes } from '../actions/reservations.actions'
-
+import { useHistory } from 'react-router-dom'
 const initialState = {
   loading: false,
   reservations: [],
   reservation: {
-    adults: 0,
-    childrens: 0,
-    infants: 0,
     passengers: [],
+    flights: [],
+    departure: null,
+    arrival: null,
     departureFlight: null,
     returnFlight: null,
     mode: ''
@@ -25,6 +25,16 @@ export const ReservationsReducer = (state = initialState, action) => {
         error: null
       }
 
+    //#region reservation flow
+    case ReservationsActionTypes.SET_PASSENGERS:
+      return {
+        ...state,
+        reservation: {
+          ...state.reservation,
+          passengers: action.payload
+        }
+      }
+
     case ReservationsActionTypes.SET_FLIGHT_MODE:
       return {
         ...state,
@@ -34,52 +44,42 @@ export const ReservationsReducer = (state = initialState, action) => {
         }
       }
 
-    case ReservationsActionTypes.SELECT_FLIGHT:
-      if (action.payload.type === 'departure') {
-        return {
-          ...state,
-          reservation: {
-            ...state.reservation,
-            departureFlight: action.payload.flight
-          }
-        }
-      } else {
-        return {
-          ...state,
-          reservation: {
-            ...state.reservation,
-            returnFlight: action.payload.flight
-          }
-        }
-      }
-
-    case ReservationsActionTypes.UPDATE_PASSENGERS:
+    case ReservationsActionTypes.ADD_FLIGHT:
       return {
         ...state,
         reservation: {
           ...state.reservation,
-          passengers: action.payload
+          flights: [...state.reservation.flights, action.payload]
         }
       }
 
-    case ReservationsActionTypes.CREATE_LOCAL:
+    case ReservationsActionTypes.SET_DEPARTURE_CITY:
       return {
         ...state,
-        reservation: action.payload.reservation
+        reservation: {
+          ...state.reservation,
+          departure: action.payload
+        }
       }
 
-    case ReservationsActionTypes.UPDATE_LOCAL:
+    case ReservationsActionTypes.SET_ARRIVAL_CITY:
       return {
         ...state,
-        reservation: action.payload
+        reservation: {
+          ...state.reservation,
+          arrival: action.payload
+        }
       }
+    //#endregion
 
+    //#region persist reservation
     case ReservationsActionTypes.CREATE:
       return {
         ...state,
         loading: true
       }
     case ReservationsActionTypes.CREATE_SUCCESS:
+      useHistory('/reservations')
       return {
         ...state,
         loading: false,
@@ -92,6 +92,8 @@ export const ReservationsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       }
+    //#endregion
+
     case ReservationsActionTypes.READ:
       return {
         ...state,

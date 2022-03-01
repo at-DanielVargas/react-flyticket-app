@@ -1,12 +1,11 @@
 import { AuthActionTypes } from '../actions/auth.actions'
-
-import { NETWORK_STATUS } from '@constants'
+import { NETWORK_STATUS, USER_STORAGE_KEY, USER_ACCESS_TOKEN } from '@constants'
 
 const initialState = {
   loginRequestStatus: NETWORK_STATUS.IDLE,
   registerRequestStatus: NETWORK_STATUS.IDLE,
-  user: null,
-  accessToken: null,
+  user: window.localStorage.getItem(USER_STORAGE_KEY) || null,
+  accessToken: window.localStorage.getItem(USER_ACCESS_TOKEN) || null,
   loginError: null,
   registerError: null
 }
@@ -20,6 +19,8 @@ export const AuthReducer = (state = initialState, action) => {
         loginError: null
       }
     case AuthActionTypes.LOGIN_SUCCESS:
+      window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(action.payload.user))
+      window.localStorage.setItem(USER_ACCESS_TOKEN, action.payload.accessToken)
       return {
         ...state,
         loginRequestStatus: NETWORK_STATUS.IDLE,
@@ -40,7 +41,8 @@ export const AuthReducer = (state = initialState, action) => {
     case AuthActionTypes.REGISTER_REQUEST:
       return {
         ...state,
-        registerRequestStatus: NETWORK_STATUS.LOADING
+        registerRequestStatus: NETWORK_STATUS.LOADING,
+        registerError: null
       }
     case AuthActionTypes.REGISTER_SUCCESS:
       return {
@@ -58,9 +60,12 @@ export const AuthReducer = (state = initialState, action) => {
       }
 
     case AuthActionTypes.LOGOUT:
+      window.localStorage.removeItem(USER_STORAGE_KEY)
+      window.localStorage.removeItem(USER_ACCESS_TOKEN)
       return {
         ...state,
         isAuthenticated: false,
+        accessToken: null,
         user: null
       }
     default:

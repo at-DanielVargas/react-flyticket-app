@@ -1,12 +1,23 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Outlet, Redirect } from 'react-router-dom'
 import { Steps } from '@components'
+import { useSelector } from 'react-redux'
+import { FlightsSelectors } from '@store'
 
-export const Booking = () => {
-  return (
+export const Booking = ({ children }) => {
+  const flightQuery = useSelector(FlightsSelectors.selectLastSearch)
+
+  return flightQuery === null ? (
+    <Redirect to='/' />
+  ) : (
     <>
       <Steps />
-      <Outlet />
+      {children}
     </>
   )
+}
+
+Booking.propTypes = {
+  children: PropTypes.node
 }
